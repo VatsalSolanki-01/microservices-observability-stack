@@ -1,0 +1,7 @@
+collector:
+  filesystem: true
+  cpu: true
+  meminfo: true
+  diskstats: true
+web: 
+  listen-address: ":9100"

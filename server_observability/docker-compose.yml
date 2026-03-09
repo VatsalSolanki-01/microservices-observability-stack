@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+
+  node_exporter:
+    image: prom/node-exporter
+    container_name: node-exporter
+    ports:
+      - "9100:9100"
+    restart: unless-stopped
+    networks:
+      - observability
+
+  promtail:
+    image: grafana/promtail
+    container_name: promtail
+    ports:
+      - "9080:9080"
+    volumes:
+      - ./promtail/promtail.yml:/etc/promtail/config.yml
+      - /var/log:/var/log:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /tmp:/tmp
+    command: -config.file=/etc/promtail/config.yml
+    restart: unless-stopped
+    networks:
+      - observability
+
+networks:
+  observability:
+    external: true

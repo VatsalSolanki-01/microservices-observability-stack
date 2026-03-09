@@ -1,0 +1,21 @@
+groups:
+- name: example-alerts
+  rules:
+
+  - alert: InstanceDown
+    expr: up == 0
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: Instance is down
+      description: A monitored instance has stopped responding
+
+  - alert: HighCPUUsage
+    expr: rate(process_cpu_seconds_total[1m]) > 0.8
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: High CPU usage detected
+      description: CPU usage has exceeded threshold
